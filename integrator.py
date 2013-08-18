@@ -38,20 +38,32 @@ class Integrator:
             I = I2
         
         return I
-    
-def trap(f, a, b):
+
+def gaussian(f, a, b, w, x):
     """
     Calculate an integral of f between a and b
-        using trapezoidal rule (2-pt Newton-Cotes)
+        using the given weights and values of a gaussian quadrature function
     """
-    return ((b-a)/2.0)*(f(a) + f(b))
+    fv = [(b-a)/2.0*x[i] + (a+b)/2.0 for i in xrange(len(x))]
+    return ((b-a)/2.0)*sum(w[i]*f(fv[i]) for i in xrange(len(w)))
 
-def simpsons4(f, a, b):
+def gaussian2(f, a, b):
     """
-     Calculate an integral of f between a and b
-         using simpsons 3/8th's method (4-pt Newton-Cotes)
-     """
-    return ((b-a)/8.0)*(f(a) + 3.0*f((2*a+b)/3.0) + 3.0*f((a+2*b)/3.0) + f(b))
+    Calculate an integral of f between a and b
+        using 2-pt gaussian quadrature
+    """
+    w = [1, 1]
+    x = [-0.57735027, 0.57735027]
+    return gaussian(f, a, b, w, x)
+
+def gaussian4(f, a, b):
+    """
+    Calculate an integral of f between a and b
+        using 4-pt gaussian quadrature
+    """
+    w = [0.3478548, 0.6521451, 0.6521451, 0.3478548]
+    x = [-0.86113631, -0.33998104, 0.33998104, 0.86113631]
+    return gaussian(f, a, b, w, x)
         
 if __name__ == '__main__':
     print("Test Adaptive Integrator")
@@ -61,7 +73,7 @@ if __name__ == '__main__':
          lambda x: 5*x**5,
          lambda x: 5*x**5 - x**4 + 3**x + math.sqrt(abs(x)) + x*math.sin(x**2)]
     
-    integrator = Integrator(trap, simpsons4)
+    integrator = Integrator(gaussian2, gaussian4)
     
     for i in f:
         print "Scipy Integral: {}".format(scipy.integrate.quad(i, -5, 5)[0])
