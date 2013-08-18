@@ -39,7 +39,7 @@ class Integrator:
         
         return I
 
-def gaussian(f, a, b, w, x):
+def _gaussian(f, a, b, w, x):
     """
     Calculate an integral of f between a and b
         using the given weights and values of a gaussian quadrature function
@@ -54,7 +54,7 @@ def gaussian2(f, a, b):
     """
     w = [1, 1]
     x = [-0.57735027, 0.57735027]
-    return gaussian(f, a, b, w, x)
+    return _gaussian(f, a, b, w, x)
 
 def gaussian4(f, a, b):
     """
@@ -63,7 +63,7 @@ def gaussian4(f, a, b):
     """
     w = [0.3478548, 0.6521451, 0.6521451, 0.3478548]
     x = [-0.86113631, -0.33998104, 0.33998104, 0.86113631]
-    return gaussian(f, a, b, w, x)
+    return _gaussian(f, a, b, w, x)
         
 if __name__ == '__main__':
     print("Test Adaptive Integrator")
