@@ -26,11 +26,11 @@ START "" "D:\Program Files (X86)\SumatraPDF\SumatraPDF.exe" %3 -reuse-instance
 :cleanup  
 :: del *.dvi
 :: del *.out
- del *.log 
- del *.aux  
- del *.bbl    
- del *.blg  
- del *.pyg
+:: del *.log 
+:: del *.aux  
+:: del *.bbl    
+:: del *.blg  
+:: del *.pyg
 :: del *.brf  
 
 goto:eof  

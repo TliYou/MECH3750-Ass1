@@ -16,7 +16,7 @@ import pylab
 import integrator as I
 from mybisect import solvebisect
 
-limit = 0.99999999
+limit = 0.99
 
 def f1(theta, alpha):
     """
@@ -72,7 +72,7 @@ def f3(theta, alpha):
         
     return -math.sin(theta)/math.sqrt(math.cos(theta) - math.cos(alpha)) 
 
-def eqn1(alpha, XgOnL, intg):
+def optimiseXgOnL(alpha, XgOnL, intg):
     """
     Evaluate the equation for X_g/L given alpha, and subtract the given value
         of XgOnL.
@@ -102,7 +102,7 @@ def eqn1(alpha, XgOnL, intg):
     
     return Term1 * (Term2/Term3) - Term4
 
-def eqn2(alpha, intg):
+def getYbOnL(alpha, intg):
     """
     Evaluate an equation for Y_b/L
     
@@ -126,7 +126,7 @@ def eqn2(alpha, intg):
     
     return Term1 * (Term2/Term3)
 
-def eqn3(alpha, intg):
+def getPOnPe(alpha, intg):
     """
     Evaluate an equation for P/P_e
     
@@ -163,9 +163,10 @@ if __name__ == '__main__':
     
     for XgOnL in (0.99, 0.95, 0.9, 0.5, 0):
         ListX.append(XgOnL)
-        ListA.append(solvebisect(eqn1, 0.01, limit*math.pi, 1e-6, XgOnL, intg))
-        ListY.append(eqn2(ListA[-1], intg))
-        ListP.append(eqn3(ListA[-1], intg))
+        ListA.append(solvebisect(optimiseXgOnL, 0.01, limit*math.pi, 
+                                 1e-6, XgOnL, intg))
+        ListY.append(getYbOnL(ListA[-1], intg))
+        ListP.append(getPOnPe(ListA[-1], intg))
         
         table.add_row([XgOnL, math.degrees(ListA[-1]), ListY[-1], ListP[-1]])
     

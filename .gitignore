@@ -2,3 +2,9 @@
 .pydevproject
 *.pyc
 *.pdf
+*.aux
+*.bbl
+*.blg
+*.log
+*.pyg
+graph.png
