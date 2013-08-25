@@ -82,7 +82,7 @@ L =
 \int_0^{\frac{\pi}{2}} 
     {\displaystyle{\left[
         1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}}
+    \right]^{-\frac{-}{2}}}}
 \ud \phi \label{eq:L}
 \end{equation}
 
@@ -100,21 +100,21 @@ L & =
 \int_0^{\frac{\pi}{2}} 
     {\displaystyle{\left[
         1-\sin^2{\left(\frac{0}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}}
+    \right]^{-\frac{1}{2}}}}
 \ud \phi \notag\\
 & = 
 \sqrt{\frac{EI}{P_e}} 
 \int_0^{\frac{\pi}{2}} 
     {\displaystyle{\left[
         1-\sin^2{0}\sin^2{\phi}
-    \right]^{1/2}}}
+    \right]^{-\frac{1}{2}}}}
 \ud \phi \notag\\
 & = 
 \sqrt{\frac{EI}{P_e}} 
 \int_0^{\frac{\pi}{2}} 
     {\displaystyle{\left[
         1
-    \right]^{1/2}}}
+    \right]^{-\frac{1}{2}}}}
 \ud \phi \notag\\
 & = 
 \sqrt{\frac{EI}{P_e}} 
@@ -161,10 +161,10 @@ must be found (as an equation for L already exists in
             \eqref{eq:dxds} and \eqref{eq:dsdt}}
 \frac{\ud x} {\ud s} \cdot \frac{\ud s} {\ud \theta} & = 
 			- \cos{\theta} \left [\left (\frac {2P}{EI}\right ) (\cos{\theta}- 
-					\cos{\alpha}) \right ]^\frac{-1}{2} \notag\\
+					\cos{\alpha}) \right ]^{-\frac{1}{2}} \notag\\
 \frac{\ud x} {\ud \theta} & = 
 			- \cos{\theta} \left [\left (\frac {2P}{EI}\right ) (\cos{\theta}- 
-					\cos{\alpha}) \right ]^\frac{-1}{2} \notag\\
+					\cos{\alpha}) \right ]^{-\frac{1}{2}} \notag\\
 \intertext{As the region of interest is between point A and point B, the 
             integral should be over the region $x=0$ to $x=x_g$ where 
             $\theta = 0$ at $x=0$ and where $\theta = \alpha$ at $x=x_g$  }
@@ -200,26 +200,26 @@ cos{\theta} - \cos{\alpha})^{- \frac{1}{2}}\: \partial \theta} {{\frac {EI}{P}}
             equation for P by rearranging \eqref{eq:L}}
 L &= \sqrt{\frac{EI}{P}} \int_0^{\frac{\pi}{2}} {\displaystyle{\left[
         1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}} \ud \phi \notag\\
+    \right]^{-\frac{1}{2}}}} \ud \phi \notag\\
 L^2 &= \frac{EI}{P} \left(\int_0^{\frac{\pi}{2}} {\displaystyle{\left[
         1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}} \ud \phi \right)^2 \notag\\
+    \right]^{-\frac{1}{2}}}} \ud \phi \right)^2 \notag\\
 P &= \frac{EI}{L^2} \left(\int_0^{\frac{\pi}{2}} {\displaystyle{\left[
         1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}} \ud \phi \right)^2 \label{eq:P}
+    \right]^{-\frac{1}{2}}}} \ud \phi \right)^2 \label{eq:P}
 \intertext{and dividing \eqref{eq:P} by \eqref{eq:Pe} and simplifying.}
 \frac{P}{P_e} &=
  \frac{\frac{EI}{L^2} \left(\int_0^{\frac{\pi}{2}} {\displaystyle{\left[
         1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}} \ud \phi \right)^2}
+    \right]^{-\frac{1}{2}}}} \ud \phi \right)^2}
       {\frac{\pi^2 EI}{4L^2}} \notag\\
  &= \frac{\left(\int_0^{\frac{\pi}{2}} {\displaystyle{\left[
         1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}} \ud \phi \right)^2}
+    \right]^{-\frac{1}{2}}}} \ud \phi \right)^2}
       {\frac{\pi^2}{4}} \notag\\
  &= \frac{4}{\pi^2} \left(\int_0^{\frac{\pi}{2}} {\displaystyle{\left[
         1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
-    \right]^{1/2}}} \ud \phi \right)^2
+    \right]^{-\frac{1}{2}}}} \ud \phi \right)^2
 \end{align}
 
 As there are 3 equations and 4 unknowns, a value must be given in order to make
@@ -241,12 +241,15 @@ the equations solvable. The value given in this case was $\frac{x_g}{L}$.
 
 Now the equation is in the correct form, the equation can be solved for alpha 
 using the bisection method and the values of $\frac{x_g}{L}$ 
-(0.99, 0.95, 0.9, 0.5). To prevent errors, the limits of the bisection method
-were set to be between 0.01 and 0.99$\pi$ instead of 0 to $\pi$ for $\alpha$.
+(0.99, 0.95, 0.9, 0.5). To prevent calculating over discontinuous regions, 
+the limits of the bisection 
+method were set to be between 0.01 and 0.99$\pi$ instead of 0 to $\pi$ for 
+$\alpha$.
 \clearpage
 
 The values of 4 variables are shown below, where $\frac{x_g}{L}$ is the control
-variable. The code is provided on the following page.
+variable. The code is provided on the following page, and the appendix contains
+the code used for the bisection method.
 \\
 % Get the output of task3.py
 \immediate\write18{python task3.py > task3.py.out}
