@@ -14,56 +14,159 @@ import math
 
 class Integrator:
     """
-    Adaptive integrator
+    Adaptive integrator class that is initialised with two integration rules.
     """
     
     def __init__(self, integrator1, integrator2):
         """ Constructor. 
-        Takes 2 integrator methods of the form intg1(f, a, b)        
+        
+        Initialises with two integrator functions of the form:
+            integrate(f, a, b, *args)
+        
+            Parameters
+            ----------
+        
+            func : function
+                A Python function or method to integrate.
+            a : float
+                Lower limit of integration.
+            b : float
+                Upper limit of integration.
+            args : tuple, optional
+                extra arguments to pass to func
+        
+            Returns
+            -------
+            
+            value of the integral
         """
+        
         self.intg1 = integrator1
         self.intg2 = integrator2
         
-    def get(self, f, a, b, tol=1e-6):
+    def get(self, f, a, b, tol, *args):
         """ 
         Get the integral of a function between a and b to accuracy of tol.
         Returns the numeric integral.
+        
+        Parameters
+        ----------
+    
+        func : function
+            A Python function or method to integrate.
+        a : float
+            Lower limit of integration.
+        b : float
+            Upper limit of integration.
+        tol : float
+            Acceptable tolerance for the difference between integration funcs
+        args : tuple, optional
+            extra arguments to pass to func
+    
+        Returns
+        -------
+        
+        value of the integral
         """
-        I1 = self.intg1(f, a, b)
-        I2 = self.intg2(f, a, b)
+        
+        I1 = self.intg1(f, a, b, *args)
+        I2 = self.intg2(f, a, b, *args)
         if abs(I2 - I1) > tol:
             mid = 0.5 * (a + b)
-            I = self.get(f, a, mid, tol) + self.get(f, mid, b, tol)
+            I = self.get(f, a, mid, tol, *args) \
+                    + self.get(f, mid, b, tol, *args)
         else:
             I = I2
         
         return I
 
-def _gaussian(f, a, b, w, x):
+def _gaussian(f, a, b, w, x, *args):
     """
     Calculate an integral of f between a and b
         using the given weights and values of a gaussian quadrature function
-    """
-    fv = [(b-a)/2.0*x[i] + (a+b)/2.0 for i in xrange(len(x))]
-    return ((b-a)/2.0)*sum(w[i]*f(fv[i]) for i in xrange(len(w)))
+        
+    Parameters
+    ----------
 
-def gaussian2(f, a, b):
+    func : function
+        A Python function or method to integrate.
+    a : float
+        Lower limit of integration.
+    b : float
+        Upper limit of integration.
+    w : list
+        List of weightings for quadrature
+    x : list
+        List of corresponding points for quadrature
+    args : tuple, optional
+        extra arguments to pass to func
+
+    Returns
+    -------
+    
+    value of the integral    
+    """
+    
+    fv = [(b-a)/2.0*x[i] + (a+b)/2.0 for i in xrange(len(x))]
+    return ((b-a)/2.0)*sum(w[i]*f(fv[i], *args) for i in xrange(len(w)))
+
+def gaussian2(f, a, b, *args):
     """
     Calculate an integral of f between a and b
         using 2-pt gaussian quadrature
-    """
-    w = [1, 1]
-    x = [-0.57735027, 0.57735027]
-    return _gaussian(f, a, b, w, x)
+        
+    Parameters
+    ----------
 
-def gaussian4(f, a, b):
+    func : function
+        A Python function or method to integrate.
+    a : float
+        Lower limit of integration.
+    b : float
+        Upper limit of integration.
+    args : tuple, optional
+        extra arguments to pass to func
+
+    Returns
+    -------
+    
+    value of the integral
+    """
+    
+    w = [1, 1]
+    x = [-math.sqrt(3)/3.0, math.sqrt(3)/3.0]
+    return _gaussian(f, a, b, w, x, *args)
+
+def gaussian4(f, a, b, *args):
     """
     Calculate an integral of f between a and b
         using 4-pt gaussian quadrature
+        
+    Parameters
+    ----------
+
+    func : function
+        A Python function or method to integrate.
+    a : float
+        Lower limit of integration.
+    b : float
+        Upper limit of integration.
+    args : tuple, optional
+        extra arguments to pass to func
+
+    Returns
+    -------
+    
+    value of the integral
     """
-    w = [0.3478548, 0.6521451, 0.6521451, 0.3478548]
-    x = [-0.86113631, -0.33998104, 0.33998104, 0.86113631]
-    return _gaussian(f, a, b, w, x)
+    
+    w = [(18-math.sqrt(30))/36.0, (18+math.sqrt(30))/36.0, 
+         (18+math.sqrt(30))/36.0, (18-math.sqrt(30))/36.0]
+    x = [-math.sqrt((3+2*math.sqrt(6.0/5.0))/7.0), 
+         -math.sqrt((3-2*math.sqrt(6.0/5.0))/7.0), 
+         math.sqrt((3-2*math.sqrt(6.0/5.0))/7.0), 
+         math.sqrt((3+2*math.sqrt(6.0/5.0))/7.0)]
+    return _gaussian(f, a, b, w, x, *args)
         
 if __name__ == '__main__':
     print("Test Adaptive Integrator")
@@ -77,5 +180,5 @@ if __name__ == '__main__':
     
     for i in f:
         print "Scipy Integral: {}".format(scipy.integrate.quad(i, -5, 5)[0])
-        print "My Integral: {}".format(integrator.get(i, -5, 5))
+        print "My Integral: {}".format(integrator.get(i, -5, 5, 1e-6))
         print "----"
