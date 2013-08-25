@@ -93,7 +93,7 @@ rod is vertical
 \alpha = 0 \text{ when } P = P_e
 \end{equation}
 the equation can be simplified 
-n
+
 \begin{align}
 L & = 
 \sqrt{\frac{EI}{P_e}} 
@@ -145,6 +145,42 @@ compared to the module provided by SciPy.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TASK 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Task 3}
+
+\begin{align}
+L & = 
+\sqrt{\frac{EI}{P_e}} 
+\int_0^{\frac{\pi}{2}} 
+    {\displaystyle{\left[
+        1-\sin^2{\left(\frac{\alpha}{2}\right)}\sin^2{\phi}
+    \right]^{1/2}}}
+\ud \phi \\
+\frac{\ud s}{\ud \theta} & = -\left [ \left(\frac{2P}{EI}\right)
+			(\cos{\theta}- \cos{\alpha}) \right ]^{-\frac{1}{2}} \\
+\frac{\ud x} {\ud s} \cdot \frac{\ud s} {\ud \theta} & = 
+			- \cos{\theta} \left [\left (\frac {2P}{EI}\right ) (\cos{\theta}- 
+					\cos{\alpha}) \right ]^\frac{-1}{2} \notag\\
+\int_{x_g}^{0} \ud x & = \int_{0}^{\alpha} - \cos{\theta} \left [ \left(
+			\frac{2P}{EI} \right )\left (\cos{\theta} - \cos{\alpha} \right )
+					\right ]^{-\frac{1}{2}} \ud \theta \notag\\
+x_g & = \int_{0}^{\alpha} - \cos{\theta} \left [ \left(\frac{2P}{EI} \right )
+			\left (\cos{\theta} - \cos{\alpha} \right )\right ]^{-\frac{1}{2}} 
+			\\
+\frac{x_g}{L} & = \frac {\int_{0}^{\alpha} - \cos{\theta} \left [ \left
+(\frac{2P}{EI} \right)\left (\cos{\theta} - \cos{\alpha} \right )
+\right ]^{-\frac{1}{2}}}{\sqrt {\frac {EI}{P}} \int_{0}^{\frac{\pi}{2}}\left[1 
+- \sin^2\left({\frac {\alpha}{2}} \right )\sin^2 {\phi} \right]^{- \frac{1}{2}}
+\partial \theta} \notag\\
+& = \frac {\frac {1}{\frac {2P}{EI}} \int_{\alpha}^{0} -\cos{\theta}(\
+cos{\theta} - \cos{\alpha})^{- \frac{1}{2}}\: \partial \theta} {{\frac {EI}{P}}
+ \int_{0}^{\frac{\pi}{2}}\left[1 - \sin^2\left({\frac {\alpha}{2}} \right )
+ \sin^2 {\phi} \right]^{- \frac{1}{2}}\partial \theta} \notag\\
+ & = \frac {1}{\sqrt{2}} \frac {\int_{\alpha}^{0} -\cos{\theta}(\cos{\theta}
+ - \cos{\alpha})^{- \frac{1}{2}}\: \partial \theta} {\int_{0}^{\frac{\pi}{2}}
+ \left[1 - \sin^2\left({\frac {\alpha}{2}} \right ) \sin^2 {\phi} \right]^{- 
+ \frac{1}{2}}\partial \theta}
+\end{align}
+
 \inputpython{task3.py}
+
 \clearpage
 \end{document}
