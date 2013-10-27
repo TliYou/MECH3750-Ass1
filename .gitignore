@@ -8,3 +8,4 @@
 *.log
 *.pyg
 graph.png
+!tasksheet.pdf
